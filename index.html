@@ -4,54 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portfolio</title>
-<meta name="description" content="Fashion photography, interaction design and motion portfolio.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <header class="nav">
-  <a href="#top" class="nav-name" id="navName">Portfolio</a>
-  <button class="burger" id="burger" aria-label="打開作品選單" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a href="/" class="nav-name" id="navName">Portfolio</a>
+  <button class="burger" id="burger" aria-label="作品選單" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 
-<aside class="menu" id="menu" aria-hidden="true">
-  <div class="menu-filters" id="filters"></div>
-  <div class="menu-list" id="menuList"></div>
-  <div class="menu-foot"><a href="#orbit" data-close>作品分類</a><a href="#about" data-close>關於我</a></div>
-</aside>
-<div class="menu-shade" id="menuShade"></div>
+<aside class="menu" id="menu" aria-hidden="true"><div id="menuList"></div></aside>
+<div class="shade" id="shade"></div>
 
-<section class="home" id="top">
-  <div class="squeeze" id="squeeze"></div>
-  <p class="hint" id="hint">滑鼠移過放大 · 點擊打開作品 · 右上角選單可直接揀作品</p>
-</section>
-
-<section class="section" id="orbit">
-  <div class="section-head">
-    <p class="kicker blur-text">Categories</p>
-    <h2 class="blur-text">作品分類</h2>
-  </div>
-  <div class="orbit-stage" id="orbitStage">
-    <div class="orbit-center" id="orbitCenter"><span id="orbitLabel">拖動或點擊</span></div>
-  </div>
-</section>
-
-<section class="section about" id="about">
-  <div class="section-head">
-    <p class="kicker blur-text">About</p>
-    <h2 class="blur-text">關於我</h2>
-  </div>
-  <p class="about-en blur-text" id="aboutEn"></p>
-  <p class="about-zh blur-text" id="aboutZh"></p>
-  <div class="contact" id="contact"></div>
-</section>
-
-<footer class="foot"><span id="footName"></span> · <span id="year"></span></footer>
+<main class="grid" id="grid"></main>
 
 <div class="overlay" id="overlay" aria-hidden="true">
-  <button class="close" id="closeBtn" aria-label="Close">×</button>
+  <button class="close" id="closeBtn" aria-label="關閉">×</button>
   <div class="overlay-inner" id="overlayInner"></div>
 </div>
 
