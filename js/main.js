@@ -25,59 +25,6 @@
   const blurObs = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); blurObs.unobserve(e.target); } }), {threshold: 0.3});
   function initBlur(root = document) { root.querySelectorAll('.blur-text:not([data-b])').forEach((el) => { el.dataset.b = 1; splitBlur(el, el.tagName === 'P' ? 25 : 70); blurObs.observe(el); }); }
 
-  /* ---------- hero: blur-in, recede into depth, subtle zoom ---------- */
-  function hero() {
-    const cam = $('#heroCam'), layers = $('#heroLayers'), T = $('#heroText');
-    const rows = [[SITE.name || 'Portfolio', 'hero-title'], [SITE.tagline || '', 'hero-sub'], [SITE.taglineZh || '', 'hero-sub zh']];
-    const words = [];
-    rows.forEach(([txt, cls]) => {
-      if (!txt) return;
-      const row = document.createElement('div'); row.className = 'row ' + cls;
-      (CJK.test(txt) ? [...txt] : txt.split(/\s+/)).forEach((w) => { const s = document.createElement('span'); s.className = 'w'; s.textContent = w; row.appendChild(s); words.push(s); });
-      T.appendChild(row);
-    });
-    // depth layers from work covers: far ones small and blurred, a few near ones big and very blurred
-    const covers = DATA.works.map((w) => w.cover).filter(Boolean);
-    const L = [];
-    for (let i = 0; i < 12 && covers.length; i++) {
-      const z = -250 - Math.random() * 1100, d = document.createElement('div');
-      d.className = 'lyr';
-      Object.assign(d.style, {left: Math.random() * 90 + '%', top: Math.random() * 85 + '%', width: 120 + Math.random() * 160 + 'px', height: 150 + Math.random() * 200 + 'px', backgroundImage: `url(${covers[i % covers.length]})`, opacity: 0.55});
-      d.z = z; d.bl = Math.abs(z) / 110; layers.appendChild(d); L.push(d);
-    }
-    [[4, 70], [70, 78]].forEach(([l, t], i) => {
-      if (!covers.length) return;
-      const d = document.createElement('div'); d.className = 'lyr';
-      Object.assign(d.style, {left: l + '%', top: t + '%', width: '260px', height: '200px', backgroundImage: `url(${covers[(i + 3) % covers.length]})`, opacity: 0.5, zIndex: 3});
-      d.z = 320; d.bl = 26; layers.appendChild(d); L.push(d);
-    });
-    let mx = 0, my = 0;
-    addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; });
-    const t0 = performance.now();
-    function frame(now) {
-      const t = reduce ? 9 : (now - t0) / 1000;
-      const sc = cl(scrollY / (innerHeight * 0.9));               // scroll-linked exit
-      words.forEach((w, i) => {
-        const a = E(cl((t - 0.2 - i * 0.12) / 1.2));
-        const z = 650 * (1 - a) - 900 * sc * sc;
-        const b = 18 * (1 - a) + 12 * sc;
-        w.style.transform = `translateZ(${z.toFixed(1)}px)`;
-        w.style.filter = `blur(${b.toFixed(1)}px)`;
-        w.style.opacity = Math.min(cl(a * 3), 1 - sc);
-      });
-      const zin = IO(cl((t - 0.3) / 3.5)) * ZOOM;
-      cam.style.transform = `scale(${(1 + zin - sc * ZOOM * 1.4).toFixed(4)})`;
-      L.forEach((d) => {
-        const k = d.z / -700;
-        d.style.transform = `translate3d(${(mx * 40 * k + Math.sin(t * 0.5) * 10 * k).toFixed(1)}px, ${(my * 30 * k).toFixed(1)}px, ${d.z}px)`;
-        d.style.filter = `blur(${d.bl.toFixed(1)}px)`;
-      });
-      if (scrollY < innerHeight * 1.2) requestAnimationFrame(frame); else waitHero();
-    }
-    function waitHero() { const f = () => { if (scrollY < innerHeight * 1.2) { removeEventListener('scroll', f); requestAnimationFrame(frame); } }; addEventListener('scroll', f, {passive: true}); }
-    requestAnimationFrame(frame);
-  }
-
   /* ---------- orbit cards (categories) ---------- */
   function orbit() {
     const st = $('#orbitStage'), label = $('#orbitLabel');
@@ -85,7 +32,7 @@
     const cards = items.map(({c, w}) => {
       const d = document.createElement('div'); d.className = 'orbit-card';
       d.innerHTML = media(w.loop || w.cover) + `<div class="cap"><b>${c.nameZh}</b><span>${c.name}</span></div>`;
-      d.addEventListener('click', () => { if (moved) return; setFilter(c.id); $('#works').scrollIntoView({behavior: 'smooth'}); });
+      d.addEventListener('click', () => { if (moved) return; setFilter(c.id); $('#top').scrollIntoView({behavior: 'smooth'}); });
       st.appendChild(d); return d;
     });
     let ang = 0, vel = 0.12, drag = false, lx = 0, moved = false, visible = false;
@@ -113,11 +60,11 @@
   }
 
   /* ---------- squeeze grid ---------- */
-  let current = 'all';
+  let current = 'all', gridFocus = () => {};
   function setFilter(id) {
     current = id;
     document.querySelectorAll('#filters button').forEach((b) => b.classList.toggle('on', b.dataset.id === id));
-    squeeze();
+    squeeze(); buildMenu();
   }
   function filters() {
     const f = $('#filters');
@@ -145,6 +92,7 @@
         });
         k += n;
       }
+      gridFocus = (w) => focus(w ? tiles.find((t) => t.work === w) || null : null);
       function focus(f) {
         tiles.forEach((t) => {
           t.classList.toggle('on', t === f);
@@ -157,6 +105,31 @@
       box.style.transition = 'opacity .5s'; box.style.opacity = 1;
     }, box.children.length ? 300 : 0);
   }
+
+
+  /* ---------- glide-in menu (right side) ---------- */
+  const menuEl = $('#menu'), burger = $('#burger'), shade = $('#menuShade');
+  function toggleMenu(open) {
+    open = open ?? !menuEl.classList.contains('open');
+    [menuEl, shade].forEach((e) => e.classList.toggle('open', open));
+    burger.classList.toggle('on', open); burger.setAttribute('aria-expanded', open); menuEl.setAttribute('aria-hidden', !open);
+    if (!open) gridFocus(null);
+  }
+  burger.addEventListener('click', () => toggleMenu());
+  shade.addEventListener('click', () => toggleMenu(false));
+  menuEl.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) toggleMenu(false); });
+  function buildMenu() {
+    const list = $('#menuList');
+    const cats = DATA.categories.filter((c) => current === 'all' || c.id === current);
+    let i = 0;
+    list.innerHTML = cats.map((c) => {
+      const ws = DATA.works.filter((w) => w.category === c.id);
+      if (!ws.length) return '';
+      return `<p class="menu-cat">${c.nameZh} · ${c.name}</p>` + ws.map((w) => `<div class="menu-item" data-i="${DATA.works.indexOf(w)}" style="transition-delay:${Math.min(i++, 10) * 45}ms"><span>${w.title}</span><small>${w.year || ''}</small></div>`).join('');
+    }).join('');
+  }
+  $('#menuList').addEventListener('click', (e) => { const it = e.target.closest('.menu-item'); if (!it) return; toggleMenu(false); setTimeout(() => openWork(DATA.works[it.dataset.i]), 250); });
+  $('#menuList').addEventListener('pointerover', (e) => { const it = e.target.closest('.menu-item'); if (it) gridFocus(DATA.works[it.dataset.i]); });
 
   /* ---------- work detail ---------- */
   function embed(url) {
@@ -180,7 +153,7 @@
   }
   function closeWork() { ov.classList.remove('open'); ov.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; setTimeout(() => (inner.innerHTML = ''), 500); }
   $('#closeBtn').addEventListener('click', closeWork);
-  addEventListener('keydown', (e) => e.key === 'Escape' && closeWork());
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeWork(); toggleMenu(false); } });
 
   /* ---------- about ---------- */
   function about() {
@@ -197,6 +170,7 @@
 
   Promise.all([fetch('/data/site.json').then((r) => r.json()), fetch('/data/works.json').then((r) => r.json())]).then(([s, d]) => {
     SITE = s; DATA = d; ZOOM = Math.min(Number(s.zoom ?? 12), 25) / 100;
-    about(); hero(); orbit(); filters(); squeeze(); initBlur();
+    if (isTouch) $('#hint').textContent = '撳一下放大 · 再撳打開作品 · 右上角選單可直接揀作品';
+    about(); orbit(); filters(); squeeze(); buildMenu(); initBlur();
   });
 })();
