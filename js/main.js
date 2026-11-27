@@ -6,11 +6,17 @@
   const media = (src) => /\.(mp4|webm|mov)$/i.test(src)
     ? `<video src="${src}" muted loop playsinline preload="metadata"></video>`
     : `<img src="${src}" alt="" loading="lazy">`;
-  let works = [], focusWork = () => {};
+  let works = [], cats = [], focusWork = () => {};
+  // pastel fill + dark text of the same hue, per category
+  const PAL = {fashion: ['#FBEAF0', '#72243E'], portrait: ['#F1EFE8', '#444441'], interaction: ['#EEEDFE', '#3C3489'], motion: ['#FAECE7', '#712B13'], graphic: ['#E6F1FB', '#0C447C'], brand: ['#E1F5EE', '#085041']};
+  const EXTRA = [['#EAF3DE', '#27500A'], ['#FAEEDA', '#633806'], ['#E1F5EE', '#085041']];
+  const pal = (id) => PAL[id] || EXTRA[Math.abs([...id].reduce((a, c) => a + c.charCodeAt(0), 0)) % EXTRA.length];
+  const catZh = (id) => (cats.find((c) => c.id === id) || {}).nameZh || id;
 
   /* grid: rows of random-sized tiles; the focused tile grows, the rest squeeze */
   function buildGrid() {
     const grid = $('#grid'), list = works.slice().sort(() => Math.random() - 0.5);
+    grid.innerHTML = '';
     const rows = [], tiles = [], pattern = [3, 4, 2, 3];
     let k = 0, p = 0;
     while (k < list.length) {
@@ -21,7 +27,9 @@
       list.slice(k, k + n).forEach((w) => {
         const t = document.createElement('div'); t.className = 'tile';
         t.base = 0.7 + Math.random() * 1.1; t.style.flexGrow = t.base; t.row = r; t.work = w;
-        t.innerHTML = media(w.loop || w.cover) + `<div class="meta"><b>${w.title}</b><span>${w.category} · ${w.year || ''}</span></div>`;
+        const [bg, fg] = pal(w.category);
+        t.style.background = bg; t.style.color = fg;
+        t.innerHTML = `<div class="txt"><b>${catZh(w.category)}</b><span>${w.title}${w.year ? ' · ' + w.year : ''}</span></div>`;
         t.onpointerenter = (e) => e.pointerType === 'mouse' && focus(t);
         t.onclick = () => (isTouch && !t.classList.contains('on') ? focus(t) : openWork(w));
         r.appendChild(t); tiles.push(t);
@@ -32,7 +40,6 @@
       tiles.forEach((t) => {
         t.classList.toggle('on', t === f);
         t.style.flexGrow = !f ? t.base : t === f ? t.base * 4 : t.row === f.row ? t.base * 0.6 : t.base;
-        const v = t.querySelector('video'); if (v) t === f ? v.play().catch(() => {}) : v.pause();
       });
       rows.forEach((r) => (r.style.flexGrow = !f ? r.base : r === f.row ? r.base * 3.2 : r.base * 0.55));
     }
@@ -52,6 +59,7 @@
       `<div class="item" data-i="${i}" style="transition-delay:${Math.min(i, 10) * 45}ms"><span>${w.title}</span><small>${w.year || ''}</small></div>`).join('');
   }
   burger.onclick = () => toggleMenu();
+  $('#shuffle').onclick = () => buildGrid();
   shade.onclick = () => toggleMenu(false);
   $('#menuList').onclick = (e) => { const it = e.target.closest('.item'); if (it) { toggleMenu(false); setTimeout(() => openWork(works[it.dataset.i]), 250); } };
   $('#menuList').onpointerover = (e) => { const it = e.target.closest('.item'); if (it) focusWork(works[it.dataset.i]); };
@@ -70,7 +78,7 @@
   Promise.all([fetch('/data/site.json').then((r) => r.json()), fetch('/data/works.json').then((r) => r.json())]).then(([site, data]) => {
     $('#navName').textContent = site.name || 'Portfolio';
     document.title = site.name || 'Portfolio';
-    works = data.works || [];
+    works = data.works || []; cats = data.categories || [];
     buildGrid(); buildMenu();
   });
 })();
