@@ -13,15 +13,31 @@
   const pal = (id) => PAL[id] || EXTRA[Math.abs([...id].reduce((a, c) => a + c.charCodeAt(0), 0)) % EXTRA.length];
   const catZh = (id) => (cats.find((c) => c.id === id) || {}).nameZh || id;
 
+  const portrait = matchMedia('(orientation: portrait)');
+  // desktop: same rows as the demo (3, 4, 2, 3 …)
+  function desktopRows(n) {
+    const pat = [3, 4, 2, 3], out = []; let k = 0, p = 0;
+    while (k < n) { let c = pat[p++ % pat.length]; if (n - k - c === 1) c++; c = Math.min(c, n - k); out.push(c); k += c; }
+    return out;
+  }
+  // phone: at most 3 tiles across and 4 rows down; counts spread at random
+  function phoneRows(n) {
+    n = Math.min(n, 12);
+    const r = Math.min(4, Math.max(1, Math.ceil(n / 2.5)));
+    const out = Array(r).fill(Math.floor(n / r));
+    let rest = n - out.reduce((a, b) => a + b, 0);
+    while (rest > 0) { const i = Math.floor(Math.random() * r); if (out[i] < 3) { out[i]++; rest--; } }
+    return out;
+  }
+
   /* grid: rows of random-sized tiles; the focused tile grows, the rest squeeze */
   function buildGrid() {
     const grid = $('#grid'), list = works.slice().sort(() => Math.random() - 0.5);
     grid.innerHTML = '';
-    const rows = [], tiles = [], pattern = [3, 4, 2, 3]; // same rows as the demo
-    let k = 0, p = 0;
-    while (k < list.length) {
-      let n = pattern[p++ % pattern.length];
-      if (list.length - k - n === 1) n++;
+    const rows = [], tiles = [];
+    const counts = portrait.matches ? phoneRows(list.length) : desktopRows(list.length);
+    let k = 0;
+    for (const n of counts) {
       const r = document.createElement('div'); r.className = 'row';
       r.base = 0.8 + Math.random() * 0.6; r.style.flexGrow = r.base; grid.appendChild(r); rows.push(r);
       list.slice(k, k + n).forEach((w) => {
@@ -60,6 +76,7 @@
   }
   burger.onclick = () => toggleMenu();
   $('#shuffle').onclick = () => buildGrid();
+  portrait.addEventListener('change', () => buildGrid());
   shade.onclick = () => toggleMenu(false);
   $('#menuList').onclick = (e) => { const it = e.target.closest('.item'); if (it) { toggleMenu(false); setTimeout(() => openWork(works[it.dataset.i]), 250); } };
   $('#menuList').onpointerover = (e) => { const it = e.target.closest('.item'); if (it) focusWork(works[it.dataset.i]); };
