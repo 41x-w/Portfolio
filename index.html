@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio</title>
+<meta name="description" content="Fashion photography, interaction design and motion portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="nav">
+  <a href="#top" class="nav-name" id="navName">Portfolio</a>
+  <nav>
+    <a href="#orbit">Categories</a>
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-cam" id="heroCam">
+    <div class="hero-layers" id="heroLayers"></div>
+    <div class="hero-text" id="heroText"></div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span></div>
+</section>
+
+<section class="section" id="orbit">
+  <div class="section-head">
+    <p class="kicker blur-text">Categories</p>
+    <h2 class="blur-text">作品分類</h2>
+  </div>
+  <div class="orbit-stage" id="orbitStage">
+    <div class="orbit-center" id="orbitCenter"><span id="orbitLabel">拖動或點擊</span></div>
+  </div>
+</section>
+
+<section class="section" id="works">
+  <div class="section-head">
+    <p class="kicker blur-text">Selected works</p>
+    <h2 class="blur-text">精選作品</h2>
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="squeeze" id="squeeze"></div>
+  <p class="hint">滑鼠移過放大 · 點擊打開作品</p>
+</section>
+
+<section class="section about" id="about">
+  <div class="section-head">
+    <p class="kicker blur-text">About</p>
+    <h2 class="blur-text">關於我</h2>
+  </div>
+  <p class="about-en blur-text" id="aboutEn"></p>
+  <p class="about-zh blur-text" id="aboutZh"></p>
+  <div class="contact" id="contact"></div>
+</section>
+
+<footer class="foot"><span id="footName"></span> · <span id="year"></span></footer>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <button class="close" id="closeBtn" aria-label="Close">×</button>
+  <div class="overlay-inner" id="overlayInner"></div>
+</div>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

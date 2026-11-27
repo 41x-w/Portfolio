@@ -1,0 +1,63 @@
+backend:
+  name: github
+  repo: 41x-w/Portfolio
+  branch: main
+locale: zh_Hant
+media_folder: images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: settings
+    label: 網站設定
+    files:
+      - name: site
+        label: 基本資料 / 關於我
+        file: data/site.json
+        format: json
+        fields:
+          - {name: name, label: 名字, widget: string}
+          - {name: tagline, label: 英文副標題, widget: string, required: false}
+          - {name: taglineZh, label: 中文副標題, widget: string, required: false}
+          - {name: about, label: 關於我（英文）, widget: text, required: false}
+          - {name: aboutZh, label: 關於我（中文）, widget: text, required: false}
+          - {name: email, label: Email, widget: string, required: false}
+          - {name: instagram, label: Instagram 連結, widget: string, required: false}
+          - {name: cv, label: CV（PDF）, widget: file, required: false}
+          - {name: zoom, label: 標題縮放幅度（0–25）, widget: number, value_type: int, min: 0, max: 25, default: 12}
+
+  - name: portfolio
+    label: 作品
+    files:
+      - name: works
+        label: 所有作品同分類
+        file: data/works.json
+        format: json
+        fields:
+          - name: works
+            label: 作品
+            label_singular: 作品
+            widget: list
+            summary: "{{fields.title}} · {{fields.category}} · {{fields.year}}"
+            fields:
+              - {name: title, label: 作品名, widget: string}
+              - {name: category, label: 類別（填分類 ID，例如 fashion）, widget: string}
+              - {name: year, label: 年份, widget: string, required: false}
+              - {name: role, label: 你負責, widget: string, required: false}
+              - {name: client, label: 客戶 / 合作, widget: string, required: false}
+              - {name: description, label: 簡介, widget: text, required: false}
+              - {name: cover, label: 封面相, widget: image}
+              - {name: loop, label: 封面短片（3–5 秒 MP4，無聲，可留空）, widget: file, required: false}
+              - {name: video, label: 完整影片連結（YouTube / Vimeo，可留空）, widget: string, required: false}
+              - name: images
+                label: 作品相片（可以拖次序）
+                widget: list
+                required: false
+                field: {name: image, label: 相片, widget: image}
+          - name: categories
+            label: 分類
+            label_singular: 分類
+            widget: list
+            fields:
+              - {name: id, label: 分類 ID（英文細階，唔好有空格）, widget: string}
+              - {name: name, label: 英文名, widget: string}
+              - {name: nameZh, label: 中文名, widget: string}
