@@ -1,21 +1,204 @@
 {
   "categories": [
-    {"id": "fashion", "name": "Fashion", "nameZh": "時裝攝影"},
-    {"id": "portrait", "name": "Portrait", "nameZh": "人像"},
-    {"id": "interaction", "name": "Interaction", "nameZh": "交互設計"},
-    {"id": "motion", "name": "Motion", "nameZh": "影片"},
-    {"id": "graphic", "name": "Graphic", "nameZh": "平面設計"}
+    {
+      "id": "fashion",
+      "name": "Fashion",
+      "nameZh": "時裝攝影"
+    },
+    {
+      "id": "portrait",
+      "name": "Portrait",
+      "nameZh": "人像"
+    },
+    {
+      "id": "interaction",
+      "name": "Interaction",
+      "nameZh": "交互設計"
+    },
+    {
+      "id": "motion",
+      "name": "Motion",
+      "nameZh": "影片"
+    },
+    {
+      "id": "graphic",
+      "name": "Graphic",
+      "nameZh": "平面設計"
+    }
   ],
   "works": [
-    {"title": "Velvet Hour", "category": "fashion", "year": "2025", "role": "Photography, art direction", "client": "Demo editorial", "description": "A dusk editorial in soft velvet tones. Replace this with your own series description.", "cover": "/images/demo/demo1.jpg", "loop": "", "video": "", "images": ["/images/demo/demo1.jpg", "/images/demo/demo5.jpg", "/images/demo/demo8.jpg"]},
-    {"title": "Blue Static", "category": "fashion", "year": "2024", "role": "Photography", "client": "", "description": "Cool tones, hard light, city rooftops.", "cover": "/images/demo/demo2.jpg", "loop": "", "video": "", "images": ["/images/demo/demo2.jpg", "/images/demo/demo9.jpg"]},
-    {"title": "Sand & Linen", "category": "portrait", "year": "2023", "role": "Photography", "client": "", "description": "Natural light portraits on location.", "cover": "/images/demo/demo3.jpg", "loop": "", "video": "", "images": ["/images/demo/demo3.jpg", "/images/demo/demo6.jpg"]},
-    {"title": "Greenroom App", "category": "interaction", "year": "2025", "role": "UI / UX design", "client": "Concept", "description": "A booking app concept for studio rentals. Add screens, flows and a prototype link.", "cover": "/images/demo/demo4.jpg", "loop": "", "video": "", "images": ["/images/demo/demo4.jpg"]},
-    {"title": "Violet Signal", "category": "motion", "year": "2024", "role": "Director, editor", "client": "Demo brand", "description": "A 30-second brand film. Paste a YouTube or Vimeo link in the video field.", "cover": "/images/demo/demo5.jpg", "loop": "", "video": "", "images": ["/images/demo/demo5.jpg"]},
-    {"title": "Amber Type", "category": "graphic", "year": "2022", "role": "Poster design", "client": "", "description": "A typographic poster series.", "cover": "/images/demo/demo6.jpg", "loop": "", "video": "", "images": ["/images/demo/demo6.jpg"]},
-    {"title": "Mono", "category": "portrait", "year": "2023", "role": "Photography", "client": "", "description": "Black and white studio portraits.", "cover": "/images/demo/demo7.jpg", "loop": "", "video": "", "images": ["/images/demo/demo7.jpg"]},
-    {"title": "Red Room", "category": "fashion", "year": "2022", "role": "Photography, styling", "client": "", "description": "Saturated red set, studio flash.", "cover": "/images/demo/demo8.jpg", "loop": "", "video": "", "images": ["/images/demo/demo8.jpg", "/images/demo/demo1.jpg"]},
-    {"title": "Tidewatch", "category": "interaction", "year": "2024", "role": "Product design", "client": "Concept", "description": "A tide and weather dashboard for surfers.", "cover": "/images/demo/demo9.jpg", "loop": "", "video": "", "images": ["/images/demo/demo9.jpg"]},
-    {"title": "Afterglow", "category": "motion", "year": "2025", "role": "Cinematography", "client": "", "description": "Music video, night exteriors.", "cover": "/images/demo/demo2.jpg", "loop": "", "video": "", "images": ["/images/demo/demo2.jpg"]}
+    {
+      "title": "Velvet Hour",
+      "category": "fashion",
+      "year": "2025",
+      "role": "Photography, art direction",
+      "client": "Demo editorial",
+      "description": "A dusk editorial in soft velvet tones. Replace this with your own series description.",
+      "cover": "/images/demo/demo1.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo1.jpg",
+        "/images/demo/demo5.jpg",
+        "/images/demo/demo8.jpg"
+      ]
+    },
+    {
+      "title": "Blue Static",
+      "category": "fashion",
+      "year": "2024",
+      "role": "Photography",
+      "client": "",
+      "description": "Cool tones, hard light, city rooftops.",
+      "cover": "/images/demo/demo2.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo2.jpg",
+        "/images/demo/demo9.jpg"
+      ]
+    },
+    {
+      "title": "Sand & Linen",
+      "category": "portrait",
+      "year": "2023",
+      "role": "Photography",
+      "client": "",
+      "description": "Natural light portraits on location.",
+      "cover": "/images/demo/demo3.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo3.jpg",
+        "/images/demo/demo6.jpg"
+      ]
+    },
+    {
+      "title": "Greenroom App",
+      "category": "interaction",
+      "year": "2025",
+      "role": "UI / UX design",
+      "client": "Concept",
+      "description": "A booking app concept for studio rentals. Add screens, flows and a prototype link.",
+      "cover": "/images/demo/demo4.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo4.jpg"
+      ]
+    },
+    {
+      "title": "Violet Signal",
+      "category": "motion",
+      "year": "2024",
+      "role": "Director, editor",
+      "client": "Demo brand",
+      "description": "A 30-second brand film. Paste a YouTube or Vimeo link in the video field.",
+      "cover": "/images/demo/demo5.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo5.jpg"
+      ]
+    },
+    {
+      "title": "Amber Type",
+      "category": "graphic",
+      "year": "2022",
+      "role": "Poster design",
+      "client": "",
+      "description": "A typographic poster series.",
+      "cover": "/images/demo/demo6.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo6.jpg"
+      ]
+    },
+    {
+      "title": "Mono",
+      "category": "portrait",
+      "year": "2023",
+      "role": "Photography",
+      "client": "",
+      "description": "Black and white studio portraits.",
+      "cover": "/images/demo/demo7.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo7.jpg"
+      ]
+    },
+    {
+      "title": "Red Room",
+      "category": "fashion",
+      "year": "2022",
+      "role": "Photography, styling",
+      "client": "",
+      "description": "Saturated red set, studio flash.",
+      "cover": "/images/demo/demo8.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo8.jpg",
+        "/images/demo/demo1.jpg"
+      ]
+    },
+    {
+      "title": "Tidewatch",
+      "category": "interaction",
+      "year": "2024",
+      "role": "Product design",
+      "client": "Concept",
+      "description": "A tide and weather dashboard for surfers.",
+      "cover": "/images/demo/demo9.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo9.jpg"
+      ]
+    },
+    {
+      "title": "Afterglow",
+      "category": "motion",
+      "year": "2025",
+      "role": "Cinematography",
+      "client": "",
+      "description": "Music video, night exteriors.",
+      "cover": "/images/demo/demo2.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo2.jpg"
+      ]
+    },
+    {
+      "title": "Paper Bloom",
+      "category": "graphic",
+      "year": "2023",
+      "role": "Illustration",
+      "client": "",
+      "description": "Demo work.",
+      "cover": "/images/demo/demo3.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo3.jpg"
+      ]
+    },
+    {
+      "title": "North Light",
+      "category": "portrait",
+      "year": "2025",
+      "role": "Photography",
+      "client": "",
+      "description": "Demo work.",
+      "cover": "/images/demo/demo7.jpg",
+      "loop": "",
+      "video": "",
+      "images": [
+        "/images/demo/demo7.jpg"
+      ]
+    }
   ]
 }

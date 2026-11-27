@@ -17,13 +17,13 @@
   function buildGrid() {
     const grid = $('#grid'), list = works.slice().sort(() => Math.random() - 0.5);
     grid.innerHTML = '';
-    const rows = [], tiles = [], pattern = [3, 4, 2, 3];
+    const rows = [], tiles = [], pattern = [3, 4, 2, 3]; // same rows as the demo
     let k = 0, p = 0;
     while (k < list.length) {
       let n = pattern[p++ % pattern.length];
       if (list.length - k - n === 1) n++;
       const r = document.createElement('div'); r.className = 'row';
-      r.base = 0.8 + Math.random() * 0.5; r.style.flexGrow = r.base; grid.appendChild(r); rows.push(r);
+      r.base = 0.8 + Math.random() * 0.6; r.style.flexGrow = r.base; grid.appendChild(r); rows.push(r);
       list.slice(k, k + n).forEach((w) => {
         const t = document.createElement('div'); t.className = 'tile';
         t.base = 0.7 + Math.random() * 1.1; t.style.flexGrow = t.base; t.row = r; t.work = w;
